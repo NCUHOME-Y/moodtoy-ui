@@ -1,7 +1,8 @@
-import StarSystem from '../components/StarSystem'
+import { Container } from '@mui/material'
+import Login from './Login'
 
 const Home = () => {
-  return <StarSystem />
+  return null
 }
 
 export default Home

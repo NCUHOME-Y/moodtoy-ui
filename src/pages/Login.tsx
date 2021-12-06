@@ -1,31 +1,51 @@
-import { Button, TextField } from '@mui/material'
-import { Box } from '@mui/system'
+import { Avatar, Button, Container, Stack, TextField } from '@mui/material'
+import { useState } from 'react'
+import LockIcon from '@mui/icons-material/Lock'
 
 const Login = () => {
+  const [auth, setAuth] = useState({ id: '', password: '' })
   return (
-    <Box sx={{ textAlign: 'center' }}>
-      <TextField
-        id="username"
-        label="邮箱"
-        variant="outlined"
-        type="email"
-        sx={{ width: 300, marginTop: 4 }}
-      />
-      <TextField
-        id="username"
-        label="密码"
-        variant="outlined"
-        type="password"
-        sx={{ width: 300, marginTop: 4 }}
-      />
-      <Button
-        variant="contained"
-        size="large"
-        sx={{ width: '50%', marginTop: 6 }}
+    <Container maxWidth="sm">
+      <Stack
+        sx={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '80vh',
+          '& .MuiTextField-root': { width: '90%', maxWidth: 300 },
+        }}
+        spacing={4}
       >
-        登录
-      </Button>
-    </Box>
+        <Avatar
+          sx={{
+            bgcolor: 'secondary.main',
+            transform: 'scale(1.5)',
+            mt: 4,
+            mb: 1,
+          }}
+        >
+          <LockIcon />
+        </Avatar>
+        <TextField
+          label="用户ID"
+          variant="outlined"
+          type="text"
+          onChange={(event) => {
+            setAuth({ ...auth, id: event.target.value })
+          }}
+        />
+        <TextField
+          label="密码"
+          variant="outlined"
+          type="password"
+          onChange={(event) => {
+            setAuth({ ...auth, password: event.target.value })
+          }}
+        />
+        <Button variant="contained" size="large" sx={{ width: 150 }}>
+          登录
+        </Button>
+      </Stack>
+    </Container>
   )
 }
 

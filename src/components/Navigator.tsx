@@ -1,6 +1,6 @@
 import { BottomNavigation, BottomNavigationAction } from '@mui/material'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import FlareIcon from '@mui/icons-material/Flare'
+import HistoryIcon from '@mui/icons-material/History'
+import FaceIcon from '@mui/icons-material/Face'
 import { Link as RouterLink } from 'react-router-dom'
 import { useState } from 'react'
 const Navigator = () => {
@@ -16,16 +16,16 @@ const Navigator = () => {
       }}
     >
       <BottomNavigationAction
-        label="System"
-        icon={<FlareIcon />}
+        label="娃娃"
+        icon={<FaceIcon />}
         component={RouterLink}
         to="/"
       />
       <BottomNavigationAction
-        label="Account"
-        icon={<AccountCircleIcon />}
+        label="记录"
+        icon={<HistoryIcon />}
         component={RouterLink}
-        to="/account"
+        to="/record"
       />
     </BottomNavigation>
   )
