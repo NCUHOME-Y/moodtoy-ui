@@ -12,4 +12,13 @@ interface Mood {
   text: string
 }
 
-export type { User, Mood }
+interface Doll {
+  base: string
+  clothes: string
+  eyes: string
+  hair: string
+  eyebrow: string
+  mouth: string
+}
+
+export type { User, Mood, Doll }

@@ -1,51 +1,82 @@
-import { Avatar, Button, Container, Stack, TextField } from '@mui/material'
+import { Alert, Button, Container, Stack, TextField } from '@mui/material'
 import { useState } from 'react'
-import LockIcon from '@mui/icons-material/Lock'
+import Background from '../components/Background'
+import BgImg from '../assets/登录或注册.png'
+import Logo from '../assets/MOOD.png'
+import BackBar from '../components/BackBar'
 
-const Login = () => {
+const Login = ({ isRegister }: { isRegister?: boolean }) => {
   const [auth, setAuth] = useState({ id: '', password: '' })
+  const size = isRegister ? 'small' : 'medium'
+  const [errorMessage] = useState('')
+
   return (
-    <Container maxWidth="sm">
-      <Stack
-        sx={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '80vh',
-          '& .MuiTextField-root': { width: '90%', maxWidth: 300 },
-        }}
-        spacing={4}
-      >
-        <Avatar
+    <>
+      <BackBar />
+      <Background src={BgImg} color="rgb(238, 238, 238)" />
+      <Container maxWidth="sm">
+        <Stack
           sx={{
-            bgcolor: 'secondary.main',
-            transform: 'scale(1.5)',
-            mt: 4,
-            mb: 1,
+            alignItems: 'center',
+            mt: 20,
+            '& .MuiTextField-root': {
+              width: '90%',
+              maxWidth: 300,
+              mt: isRegister ? 3 : 4,
+            },
+            '& .MuiInputBase-root': {
+              backgroundColor: '#fff',
+            },
           }}
         >
-          <LockIcon />
-        </Avatar>
-        <TextField
-          label="用户ID"
-          variant="outlined"
-          type="text"
-          onChange={(event) => {
-            setAuth({ ...auth, id: event.target.value })
-          }}
-        />
-        <TextField
-          label="密码"
-          variant="outlined"
-          type="password"
-          onChange={(event) => {
-            setAuth({ ...auth, password: event.target.value })
-          }}
-        />
-        <Button variant="contained" size="large" sx={{ width: 150 }}>
-          登录
-        </Button>
-      </Stack>
-    </Container>
+          <img
+            src={Logo}
+            style={{ width: '90%', maxWidth: 300, position: 'fixed', top: -24 }}
+          />
+          <TextField
+            label="用户ID"
+            variant="outlined"
+            type="text"
+            onChange={(event) => {
+              setAuth({ ...auth, id: event.target.value })
+            }}
+            size={size}
+          />
+          <TextField
+            label="密码"
+            variant="outlined"
+            type="password"
+            onChange={(event) => {
+              setAuth({ ...auth, password: event.target.value })
+            }}
+            size={size}
+          />
+          {isRegister && (
+            <TextField
+              label="再次输入密码"
+              variant="outlined"
+              type="password"
+              onChange={(event) => {
+                setAuth({ ...auth, password: event.target.value })
+              }}
+              size={size}
+            />
+          )}
+          {errorMessage && (
+            <Alert severity="error" sx={{ position: 'absolute', mt: 28 }}>
+              {errorMessage}
+            </Alert>
+          )}
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ width: 150, position: 'absolute', mt: 40 }}
+          >
+            {isRegister ? '注册' : '登录'}
+          </Button>
+        </Stack>
+      </Container>
+    </>
   )
 }
 

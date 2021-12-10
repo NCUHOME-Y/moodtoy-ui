@@ -2,47 +2,71 @@ import { Avatar, Button, Container, Stack, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { Link } from 'react-router-dom'
 import FaceIcon from '@mui/icons-material/Face'
+import BgImg from '../assets/透明底2.png'
+import LogoImg from '../assets/logo(白.png'
+import Background from '../components/Background'
 
 const Welcome = () => {
   return (
-    <Container maxWidth="sm">
-      <Stack
+    <>
+      <Background src={BgImg} color="rgb(0, 2, 42)" />
+
+      <Box
+        maxWidth="sm"
         sx={{
-          textAlign: 'center',
-          alignItems: 'center',
+          maxWidth: 400,
+          m: 'auto',
         }}
-        spacing={2}
       >
-        <Avatar
+        <Stack
           sx={{
-            bgcolor: 'secondary.main',
-            transform: 'scale(1.5)',
-            mt: 16,
-            mb: 4,
+            textAlign: 'center',
+            alignItems: 'center',
           }}
         >
-          <FaceIcon />
-        </Avatar>
-        <Typography variant="h4" sx={{ mt: 16 }}>
-          创建你的
-        </Typography>
-        <Typography variant="h3">
-          <Box component="span" sx={{ color: 'secondary.main' }}>
-            MOOD{' '}
+          <img
+            src={LogoImg}
+            style={{
+              maxWidth: 350,
+              width: '90%',
+              position: 'absolute',
+              top: 3 * 8,
+            }}
+          />
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 5 * 8,
+              '& .MuiButton-root': {
+                width: 140,
+                bgcolor: '#fff',
+                fontSize: 18,
+              },
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              component={Link}
+              to="/login"
+              sx={{ mr: 2 }}
+            >
+              登录
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              component={Link}
+              to="/register"
+              sx={{ ml: 2 }}
+            >
+              注册
+            </Button>
           </Box>
-          娃娃
-        </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{ width: 150, position: 'absolute', bottom: 96 }}
-          component={Link}
-          to="/diy"
-        >
-          开始
-        </Button>
-      </Stack>
-    </Container>
+        </Stack>
+      </Box>
+    </>
   )
 }
 

@@ -4,35 +4,22 @@ import { Routes, Route } from 'react-router-dom'
 import Account from './pages/Account'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Me from './pages/Me'
 import MoodDollDiy from './pages/MoodDollDiy'
 import Record from './pages/Record'
 import Welcome from './pages/Welcome'
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
     primary: {
-      main: '#90caf9',
+      main: 'rgb(0,2,53)',
     },
     secondary: {
-      main: '#ffe57f',
+      main: '#ff1744',
     },
-    background: {
-      default: '#262938',
-      paper: '#373c4f',
-    },
-    error: {
-      main: '#ef5350',
-    },
-    warning: {
-      main: '#ffa726',
-    },
-    info: {
-      main: '#42a5f5',
-    },
-    success: {
-      main: '#66bb6a',
-    },
+  },
+  shape: {
+    borderRadius: 12,
   },
 })
 
@@ -62,8 +49,10 @@ const App = () => {
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Login isRegister />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/diy" element={<MoodDollDiy />} />
+          <Route path="/me" element={<Me />} />
         </Routes>
       </Box>
     </ThemeProvider>
