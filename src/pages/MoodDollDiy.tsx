@@ -5,6 +5,7 @@ import Hair from '../assets/发型/发型4（红色.png'
 import Eyebrow from '../assets/眉毛/眉毛3（红色.png'
 import Mouth from '../assets/嘴巴/嘴巴4.png'
 import {
+  Button,
   Grid,
   ImageList,
   ImageListItem,
@@ -16,53 +17,72 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons/faInfo'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import MoodDoll from '../components/MoodDoll'
+import { Box } from '@mui/system'
+import BackBar from '../components/BackBar'
+
 const MoodDollDiy = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState('hair')
   const dollSize = 8 * 35
 
   return (
     <>
-      <MoodDoll
-        doll={{
-          base: BlankImg,
-          clothes: Clothes,
-          eyebrow: Eyebrow,
-          eyes: Eyes,
-          hair: Hair,
-          mouth: Mouth,
-        }}
-        size={dollSize}
-      />
-      <Grid container>
-        <Grid item xs={2}>
-          <List sx={{ mt: 1 }}>
-            <ListItemButton selected={selectedIndex === 0}>
-              <ListItemIcon>
-                <FontAwesomeIcon icon={faInfo} style={{ marginLeft: 12 }} />
-              </ListItemIcon>
-            </ListItemButton>
-          </List>
-        </Grid>
-        <Grid item xs={10}>
-          <ImageList
-            cols={2}
-            gap={0}
-            rowHeight={164}
-            sx={{ height: `calc(96vh - ${dollSize}px)` }}
-          >
-            {itemData.map((item) => (
-              <ImageListItem key={item.img}>
-                <img
-                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-        </Grid>
-      </Grid>
+      <BackBar />
+      <Box sx={{ pt: 6 }}>
+        <MoodDoll
+          doll={{
+            base: BlankImg,
+            clothes: Clothes,
+            eyebrow: Eyebrow,
+            eyes: Eyes,
+            hair: Hair,
+            mouth: Mouth,
+          }}
+          size={dollSize}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            '& .MuiButton-root': {
+              flex: '0 0 auto',
+              width: '30%',
+              ml: 1,
+              mr: 1,
+            },
+          }}
+        >
+          {[
+            ['发型', 'hair'],
+            ['眼睛', 'eyes'],
+            ['衣服', 'clothes'],
+          ].map((s) => (
+            <Button
+              variant={s[1] === selectedIndex ? 'contained' : 'outlined'}
+              onClick={() => {
+                setSelectedIndex(s[1])
+              }}
+            >
+              {s[0]}
+            </Button>
+          ))}
+        </Box>
+        <ImageList
+          cols={3}
+          gap={0}
+          rowHeight={8 * 17}
+          sx={{ height: `calc(96vh - ${dollSize + 8 * 10}px)` }}
+        >
+          {itemData.map((item) => (
+            <ImageListItem key={item.img}>
+              <img
+                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                onClick={() => {}}
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Box>
     </>
   )
 }

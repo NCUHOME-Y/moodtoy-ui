@@ -6,9 +6,9 @@ import { Doll } from '../models'
 const MoodDoll = ({ doll, size }: { doll: Doll; size: number }) => {
   const images: [string, HTMLImageElement | undefined][] = [
     doll.base,
-    doll.clothes,
     doll.eyes,
     doll.hair,
+    doll.clothes,
     doll.eyebrow,
     doll.mouth,
   ].map((src) => [src, useImage(src)[0]])

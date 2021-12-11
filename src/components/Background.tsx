@@ -7,7 +7,7 @@ const Background = ({ src, color }: { src?: string; color?: string }) => {
             backgroundImage: `url(${src})`,
             height: '100vh',
             backgroundPosition: 'center',
-            // backgroundSize: 'cover',
+            backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
             width: '100vw',
             zIndex: -1,

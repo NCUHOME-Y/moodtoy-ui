@@ -1,50 +1,33 @@
 import {
   Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
+  Container,
+  Divider,
+  IconButton,
+  InputBase,
+  Paper,
+  Stack,
+  Typography,
 } from '@mui/material'
-import { Box } from '@mui/system'
-import { useState } from 'react'
-import BackBar from '../components/BackBar'
-import UserInfo from '../components/UserInfo'
+import Background from '../components/Background'
 import { User } from '../models'
+import BgImg from '../assets/捏玩界面.png'
+import BackBar from '../components/BackBar'
+import { useState } from 'react'
 
-const Account = () => {
-  const [user, setUser] = useState<User>({
-    sid: 'name',
-    name: 'username',
-    id: 0,
-  })
+const Account = ({ user }: { user: User }) => {
   return (
-    <Box sx={{ mt: 6 }}>
+    <>
+      <Background src={BgImg} color="#eee" />
       <BackBar />
-      <List sx={{ width: '100%' }}>
-        <UserInfo user={user} />
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => {}}>
-            <ListItemText primary="更改用户名" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => {}}>
-            <ListItemText primary="更改密码" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => {}}>
-            <ListItemText primary="注销" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => {}}>
-            <ListItemText primary="删除账户" sx={{ color: 'error.main' }} />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
+      <Container maxWidth="xs" sx={{ pt: 8 }}>
+        <Stack spacing={2}>
+          <Paper sx={{ display: 'flex' }}>
+            <Avatar src={user.avatar} sx={{ height: 8 * 14, width: 8 * 14 }} />
+            <Typography variant="h4">{user.username}</Typography>
+          </Paper>
+        </Stack>
+      </Container>
+    </>
   )
 }
 

@@ -1,16 +1,20 @@
-import { Avatar, Button, Container, Stack, Typography } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import { Box } from '@mui/system'
-import { Link } from 'react-router-dom'
-import FaceIcon from '@mui/icons-material/Face'
+import { Link, useNavigate } from 'react-router-dom'
 import BgImg from '../assets/透明底2.png'
 import LogoImg from '../assets/logo(白.png'
 import Background from '../components/Background'
+import { AuthedUser } from '../models'
 
-const Welcome = () => {
+const Welcome = ({ auth }: { auth: AuthedUser }) => {
+  const navigate = useNavigate()
+  if (auth.token) {
+    navigate('/home')
+    return null
+  }
   return (
     <>
       <Background src={BgImg} color="rgb(0, 2, 42)" />
-
       <Box
         maxWidth="sm"
         sx={{
@@ -42,11 +46,13 @@ const Welcome = () => {
                 bgcolor: '#fff',
                 fontSize: 18,
               },
+              '& .MuiButton-root:hover': {
+                bgcolor: '#fff',
+              },
             }}
           >
             <Button
-              variant="contained"
-              color="primary"
+              variant="outlined"
               size="large"
               component={Link}
               to="/login"
@@ -55,7 +61,7 @@ const Welcome = () => {
               登录
             </Button>
             <Button
-              variant="contained"
+              variant="outlined"
               size="large"
               component={Link}
               to="/register"

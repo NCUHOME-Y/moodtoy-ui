@@ -1,7 +1,12 @@
 interface User {
-  id: number
-  name: string
-  sid: string
+  user_id: string
+  username: string
+  avatar?: string
+}
+
+interface AuthedUser {
+  user: User
+  token: string
 }
 
 interface Mood {
@@ -21,4 +26,4 @@ interface Doll {
   mouth: string
 }
 
-export type { User, Mood, Doll }
+export type { User, Mood, Doll, AuthedUser }
