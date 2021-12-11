@@ -3,11 +3,12 @@ import Background from '../components/Background'
 import BgImg from '../assets/捏玩界面.png'
 import BackBar from '../components/BackBar'
 import { Box } from '@mui/system'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { User } from '../models'
 import ImgAvatar from '../assets/初始.png'
 
-const Me = ({ user }: { user: User }) => {
+const Me = ({ user, logout }: { user: User; logout: () => void }) => {
+  const navigate = useNavigate()
   return (
     <>
       <BackBar />
@@ -57,7 +58,13 @@ const Me = ({ user }: { user: User }) => {
             },
           }}
         >
-          <Button variant="outlined" component={Link} to="/account">
+          <Button
+            variant="outlined"
+            onClick={() => {
+              logout()
+              navigate('/')
+            }}
+          >
             退出登录
           </Button>
           <Button variant="outlined">设置更改</Button>

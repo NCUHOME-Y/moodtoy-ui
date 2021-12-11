@@ -6,12 +6,7 @@ import LogoImg from '../assets/logo(白.png'
 import Background from '../components/Background'
 import { AuthedUser } from '../models'
 
-const Welcome = ({ auth }: { auth: AuthedUser }) => {
-  const navigate = useNavigate()
-  if (auth.token) {
-    navigate('/home')
-    return null
-  }
+const Welcome = () => {
   return (
     <>
       <Background src={BgImg} color="rgb(0, 2, 42)" />

@@ -1,6 +1,7 @@
 import { AppBar, IconButton, Toolbar } from '@mui/material'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-const BackBar = () => {
+import { ReactNode } from 'react'
+const BackBar = ({ children }: { children?: ReactNode }) => {
   return (
     <AppBar position="fixed" color="primary">
       <Toolbar variant="dense">
@@ -12,6 +13,7 @@ const BackBar = () => {
         >
           <ArrowBackIosNewIcon />
         </IconButton>
+        {children}
       </Toolbar>
     </AppBar>
   )

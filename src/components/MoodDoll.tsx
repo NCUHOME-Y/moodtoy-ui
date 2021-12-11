@@ -11,7 +11,9 @@ const MoodDoll = ({ doll, size }: { doll: Doll; size: number }) => {
     doll.clothes,
     doll.eyebrow,
     doll.mouth,
-  ].map((src) => [src, useImage(src)[0]])
+  ]
+    .filter((s) => s)
+    .map((src) => [src as string, useImage(src as string)[0]])
 
   return (
     <Box

@@ -13,15 +13,23 @@ import CheckIcon from '@mui/icons-material/Check'
 import { useState } from 'react'
 import BgHappy from '../assets/开心界面.png'
 import BgUnhappy from '../assets/烦恼界面.png'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Editor = ({ mood }: { mood: 'happy' | 'unhappy' }) => {
   const [state, setState] = useState(() => ({
     title: '',
-    content: '',
-    date: new Date(),
+    text_content: '',
+    time: new Date(),
+    feeling: mood === 'happy' ? 'good' : 'bad',
   }))
 
-  const submit = async () => {}
+  const navigate = useNavigate()
+
+  const submit = async () => {
+    await axios.post('/api/diary', state)
+    navigate('/home')
+  }
   return (
     <>
       <BackBar />
@@ -50,7 +58,7 @@ const Editor = ({ mood }: { mood: 'happy' | 'unhappy' }) => {
               }}
             />
             <Typography variant="caption">
-              {state.date.toLocaleString()}
+              {state.time.toLocaleString()}
             </Typography>
             <Divider />
             <Box
@@ -64,9 +72,9 @@ const Editor = ({ mood }: { mood: 'happy' | 'unhappy' }) => {
                 placeholder="内容"
                 multiline
                 sx={{ m: 1, width: '100%' }}
-                value={state.content}
+                value={state.text_content}
                 onChange={(e) =>
-                  setState({ ...state, content: e.target.value })
+                  setState({ ...state, text_content: e.target.value })
                 }
               />
             </Box>

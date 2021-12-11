@@ -1,44 +1,50 @@
-import BlankImg from '../assets/初始.png'
-import Clothes from '../assets/衣服/衣服1（黑色.png'
-import Eyes from '../assets/眼睛/眼睛（蓝绿色.png'
-import Hair from '../assets/发型/发型4（红色.png'
-import Eyebrow from '../assets/眉毛/眉毛3（红色.png'
-import Mouth from '../assets/嘴巴/嘴巴4.png'
-import {
-  Button,
-  Grid,
-  ImageList,
-  ImageListItem,
-  List,
-  ListItemButton,
-  ListItemIcon,
-} from '@mui/material'
-import { faInfo } from '@fortawesome/free-solid-svg-icons/faInfo'
-import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import Clothes from '../assets/衣服/衣服1（黑色.png'
+// import Eyes from '../assets/眼睛/眼睛（蓝绿色.png'
+// import Hair from '../assets/发型/发型4（红色.png'
+// import Eyebrow from '../assets/眉毛/眉毛3（红色.png'
+// import Mouth from '../assets/嘴巴/嘴巴4.png'
+import { Button, IconButton, ImageList, ImageListItem } from '@mui/material'
+import { useEffect, useState } from 'react'
 import MoodDoll from '../components/MoodDoll'
 import { Box } from '@mui/system'
 import BackBar from '../components/BackBar'
+import CheckIcon from '@mui/icons-material/Check'
+import axios from 'axios'
+import { Doll } from '../models'
 
-const MoodDollDiy = () => {
+const MoodDollDiy = ({
+  doll,
+  setDoll,
+}: {
+  doll: Doll
+  setDoll: (doll: Doll) => void
+}) => {
   const [selectedIndex, setSelectedIndex] = useState('hair')
+  const [dollImg, setDollImg] = useState<Record<string, string[]>>({})
+  const [localDoll, setLocalDoll] = useState(doll)
   const dollSize = 8 * 35
 
+  useEffect(() => {
+    ;(async () => {
+      const r = await axios.get('/api/moodtoy/all')
+      setDollImg(r.data)
+    })()
+  }, [])
   return (
     <>
-      <BackBar />
-      <Box sx={{ pt: 6 }}>
-        <MoodDoll
-          doll={{
-            base: BlankImg,
-            clothes: Clothes,
-            eyebrow: Eyebrow,
-            eyes: Eyes,
-            hair: Hair,
-            mouth: Mouth,
+      <BackBar>
+        <Box sx={{ flexGrow: 1 }} />
+        <IconButton
+          sx={{ color: '#fff' }}
+          onClick={() => {
+            setDoll(localDoll)
           }}
-          size={dollSize}
-        />
+        >
+          <CheckIcon />
+        </IconButton>
+      </BackBar>
+      <Box sx={{ pt: 6, width: '100vw', overflowX: 'hidden' }}>
+        <MoodDoll doll={doll} size={dollSize} />
         <Box
           sx={{
             display: 'flex',
@@ -58,6 +64,7 @@ const MoodDollDiy = () => {
             ['衣服', 'clothes'],
           ].map((s) => (
             <Button
+              key={s[1]}
               variant={s[1] === selectedIndex ? 'contained' : 'outlined'}
               onClick={() => {
                 setSelectedIndex(s[1])
@@ -71,13 +78,16 @@ const MoodDollDiy = () => {
           cols={3}
           gap={0}
           rowHeight={8 * 17}
-          sx={{ height: `calc(96vh - ${dollSize + 8 * 10}px)` }}
+          sx={{ height: `calc(96vh - ${dollSize + 8 * 17}px)` }}
         >
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
+          {dollImg[selectedIndex]?.map((src) => (
+            <ImageListItem key={src}>
               <img
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                onClick={() => {}}
+                key={src}
+                src={`/api/moodtoy/static/${src}`}
+                onClick={() => {
+                  setLocalDoll({ ...doll, [selectedIndex]: src })
+                }}
               />
             </ImageListItem>
           ))}
@@ -86,38 +96,5 @@ const MoodDollDiy = () => {
     </>
   )
 }
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-  },
-]
+
 export default MoodDollDiy

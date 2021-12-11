@@ -19,11 +19,11 @@ interface Mood {
 
 interface Doll {
   base: string
-  clothes: string
-  eyes: string
-  hair: string
-  eyebrow: string
-  mouth: string
+  clothes?: string
+  eyes?: string
+  hair?: string
+  eyebrow?: string
+  mouth?: string
 }
 
 export type { User, Mood, Doll, AuthedUser }
