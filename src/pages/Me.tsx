@@ -62,7 +62,7 @@ const Me = ({ user, logout }: { user: User; logout: () => void }) => {
             variant="outlined"
             onClick={() => {
               logout()
-              navigate('/')
+              navigate('/welcome')
             }}
           >
             退出登录

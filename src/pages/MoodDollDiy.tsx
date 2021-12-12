@@ -3,6 +3,7 @@
 // import Hair from '../assets/发型/发型4（红色.png'
 // import Eyebrow from '../assets/眉毛/眉毛3（红色.png'
 // import Mouth from '../assets/嘴巴/嘴巴4.png'
+import Base from '../assets/初始.png'
 import { Button, IconButton, ImageList, ImageListItem } from '@mui/material'
 import { useEffect, useState } from 'react'
 import MoodDoll from '../components/MoodDoll'
@@ -21,7 +22,7 @@ const MoodDollDiy = ({
 }) => {
   const [selectedIndex, setSelectedIndex] = useState('hair')
   const [dollImg, setDollImg] = useState<Record<string, string[]>>({})
-  const [localDoll, setLocalDoll] = useState(doll)
+  const [localDoll, setLocalDoll] = useState(() => doll)
   const dollSize = 8 * 35
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const MoodDollDiy = ({
         </IconButton>
       </BackBar>
       <Box sx={{ pt: 6, width: '100vw', overflowX: 'hidden' }}>
-        <MoodDoll doll={doll} size={dollSize} />
+        <MoodDoll doll={localDoll} size={dollSize} />
         <Box
           sx={{
             display: 'flex',
@@ -80,13 +81,17 @@ const MoodDollDiy = ({
           rowHeight={8 * 17}
           sx={{ height: `calc(96vh - ${dollSize + 8 * 17}px)` }}
         >
-          {dollImg[selectedIndex]?.map((src) => (
+          {(
+            dollImg[selectedIndex]?.map(
+              (src) => `/api/moodtoy/static${src}`
+            ) || [Base]
+          ).map((src) => (
             <ImageListItem key={src}>
               <img
                 key={src}
-                src={`/api/moodtoy/static/${src}`}
+                src={src}
                 onClick={() => {
-                  setLocalDoll({ ...doll, [selectedIndex]: src })
+                  setLocalDoll({ ...localDoll, [selectedIndex]: src })
                 }}
               />
             </ImageListItem>

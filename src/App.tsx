@@ -12,6 +12,7 @@ import Me from './pages/Me'
 import MoodDollDiy from './pages/MoodDollDiy'
 import Welcome from './pages/Welcome'
 import BlankImg from './assets/初始.png'
+import tr from './assets/tr.png'
 
 const theme = createTheme({
   palette: {
@@ -35,8 +36,14 @@ const App = () => {
   const [doll, setDoll] = useState<Doll>(() => {
     return {
       base: BlankImg,
+      clothes: tr,
+      eyebrow: tr,
+      eyes: tr,
+      hair: tr,
+      mouth: tr,
     }
   })
+  const [loggedIn] = useState(() => localStorage.getItem('user'))
 
   const navigate = useNavigate()
 
@@ -47,6 +54,12 @@ const App = () => {
       const j = JSON.parse(s) as AuthedUser
       setAuthedUser(j)
       axios.defaults.headers.common['Authorization'] = `Bearer ${j.token}`
+    }
+
+    const sd = localStorage.getItem('doll')
+    if (sd) {
+      const j = JSON.parse(sd)
+      setDoll(j)
     }
   }, [])
 
@@ -70,11 +83,7 @@ const App = () => {
           <Route
             path="/"
             element={
-              authedUser.token === '' ? (
-                <Navigate to="/welcome" />
-              ) : (
-                <Navigate to="/home" />
-              )
+              loggedIn ? <Navigate to="/home" /> : <Navigate to="/welcome" />
             }
           />
           <Route path="/welcome" element={<Welcome />} />
@@ -92,6 +101,7 @@ const App = () => {
                 setDoll={(d) => {
                   localStorage.setItem('doll', JSON.stringify(d))
                   setDoll(d)
+                  navigate('/home')
                 }}
               />
             }
